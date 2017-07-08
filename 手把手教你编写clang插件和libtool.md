@@ -1,6 +1,10 @@
 
 
-# clang 插件入门
+# clang 插件开发入门
+
+Clang是llvm的编译器前端,非常适合进行源码分析.目前开源的oclint就是基于clang进行的代码静态检查.工作中遇到了一些问题需要进行代码分析,所以学习了插件的开发流程.既然开发插件就要有合适的IDE,Mac上最合适的无疑是xcode了.本文将讲述如何使用xcode开发clang插件,在此之前请先了解clang的相关知识. 
+
+# clang 插件开发入门 
 ## 1、编译插件
 
 #### 1.1、代码下载
@@ -68,6 +72,7 @@ c. 编译 clang，myplugin 和 libclang
 ![Screen Shot 2017-07-05 at 2.51.14 P](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/Screen%20Shot%202017-07-05%20at%202.51.14%20PM.png)
 
 d. 最终效果
+
 ![Screen Shot 2017-07-05 at 2.52.00 P](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/Screen%20Shot%202017-07-05%20at%202.52.00%20PM.png)
 
 
@@ -75,7 +80,7 @@ d. 最终效果
 
 #### 2.1、hook xcode
 
-- 执行以下两个命令
+a. 执行以下两个命令
 ```
 sudo mv HackedClang.xcplugin `xcode-select -print-path`/../PlugIns/Xcode3Core.ideplugin/Contents/SharedSupport/Developer/Library/Xcode/Plug-ins
 ```
@@ -84,13 +89,17 @@ sudo mv HackedClang.xcplugin `xcode-select -print-path`/../PlugIns/Xcode3Core.id
 ```
 sudo mv HackedBuildSystem.xcspec `xcode-select -print-path`/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Specifications
 ```
+
 如果自定义 clang 路径和展示的名称，则修改以下文件
+
 ![customClang](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/customClang.png)
 
-a. Xcode 配置
+b. Xcode 配置
+
 ![8B76F915-D675-4411-876E-C858A446E5](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/8B76F915-D675-4411-876E-C858A446E5C7.png)
 
-b. 添加 other_flags
+c. 添加 other_flags
+
 ![6274A045-31D0-4514-AFDA-3F1D20AF16](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/6274A045-31D0-4514-AFDA-3F1D20AF16C3.png)
 
 
@@ -194,7 +203,7 @@ e. 向object-c对象发送消息  `isa<ObjCMessageExpr>(s)`
 
 ```
 
-# 3、获取编译命令
+## 3、获取编译命令
 
 #### 3.1、获取编译命令
 `xcodebuild clean 
@@ -208,23 +217,24 @@ xcodebuild -workspace OneTravel.xcworkspace -scheme OneTravel  CODE_SIGN_IDENTIT
 
 
 #### 3.2、修改编译命令
-##### a、针对 libtool 的命令适配，其他参数见[链接](https://clang.llvm.org/docs/ClangCommandLineReference.html#fortran-compilation-flags)
+##### 针对 libtool 的命令适配，其他参数见[链接](https://clang.llvm.org/docs/ClangCommandLineReference.html#fortran-compilation-flags)
 **a.移除-gmodules：** 这个命令会打包编译信息，自定义的libtool不支持，而且也没有用。
-**b. 移除 -c和-o及其参数:**仅解析ast，这是无用参数
-**c.添加引用c++库（如果要解析一些.cpp和.mm文件）:**
-`-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
-`
-**d.替换工具：**将 clang 替换成自己的工具，如` onec -- -x` `--`后面对应对应,双横线[参见](http://clang.llvm.org/docs/LibTooling.html)
 
-效果如下（精简版）：
+**b.移除 -c和-o及其参数:** 仅解析ast，这是无用参数
+
+**c.添加引用c++库（如果要解析一些.cpp和.mm文件）:** `-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
+`
+
+**d.替换工具:** 将 clang 替换成自己的工具，如` onec -- -x` `--`后面对应对应,双横线[参见](http://clang.llvm.org/docs/LibTooling.html)
+
+示例如下（精简版）：
 
 ```
 /Users/xx/Documents/plugin/bin/bin/onec /Users/xx/Documents/conn_connection.cpp  -outdir=~/Desktop -- -x c++ -arch armv7 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
-
 ```
 
 
-# 4、libtool 工具开发
+## 4、libtool 工具开发
 
 #### 4.1 添加代码和 CMake文件
 
@@ -249,7 +259,7 @@ libclangBasic：clang的基础杂项库
 http://clang.llvm.org/docs/InternalsManual.html
 
 
-# 5 插件和 libtool 工具简单对比
+## 5 插件和 libtool 工具简单对比
 
 |   | 插件 | libtool |
 | --- | --- | --- |
@@ -258,5 +268,10 @@ http://clang.llvm.org/docs/InternalsManual.html
 | 获取编译命令 | 直接使用 xcodebuild 生成的命令 | 自己拼接或改造 |
 | 与 xcode 集成 | 可以 | 不可以 |
 
+由于 libtool 和clang 插件的大部分api可以通用，因此实际工作用中选择哪个都可以，如果出现问题，两者的代码可以低成本的相互迁移。
 
+## links
+ * [CLANG技术分享系列一:编写你的第一个CLANG插件](http://kangwang1988.github.io/tech/2016/10/31/write-your-first-clang-plugin.html)
+ * [How To Setup Clang Tooling For LLVM](http://clang.llvm.org/docs/HowToSetupToolingForLLVM.html)
+ * [clang-tutorial](https://kevinaboos.wordpress.com/2013/07/23/clang-tutorial-part-i-introduction/)
 
