@@ -5,37 +5,39 @@
 
 #### 1.1、代码下载
 
-- 查看xcode对应的clang版本
-https://trac.macports.org/wiki/XcodeVersionInfo
+ a.查看xcode对应的clang版本 https://trac.macports.org/wiki/XcodeVersionInfo
 
-- 官网查询对应发布版本
-https://opensource.apple.com/source/clang/
-![](image/14991660044865/14992229039189.png)
+ b.官网查询对应发布版本 https://opensource.apple.com/source/clang/ 
+
+![](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/14992229039189.png)
 
 
-github查找对应分支
+c.根据官网用的代码查找github查找对应分支并下载代码
 https://github.com/llvm-mirror/llvm
-![](media/14991660044865/14992366857433.png)
+
+![](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/14992366857433.png)
 
 
 #### 1.2、添加插件代码
 
-- 创建插件所在文件夹
-![](media/14991660044865/14992372911576.png)
+a.创建插件所在文件夹
 
-- 编写cmakelists文件
-![](media/14991660044865/14992373516725.png)
+![](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/14992372911576.png)
 
-- 添加插件代码
+b.编写cmakelists文件
 
-![Screen Shot 2017-07-05 at 2.56.32 P](media/14991660044865/Screen%20Shot%202017-07-05%20at%202.56.32%20PM.png)
+![](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/14992373516725.png)
+
+c.添加插件代码
+
+![](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/Screen%20Shot%202017-07-05%20at%202.56.32%20PM.png)
 
 
 
 #### 1.3、编译代码
 有两种编译方式，一种使用cmake直接编译，一种使用IDE。这里介绍下使用xcode的编译方式。
 
-- 生成 xcodeproj 文件
+a. 生成 xcodeproj 文件
 
 ```
 cd /opt
@@ -55,18 +57,18 @@ cmake -G Xcode ../llvm -DCMAKE_BUILD_TYPE:STRING=MinSizeRel
 ```
 备注：官网教程 http://llvm.org/docs/CMake.html
 
-![](media/14991660044865/14992371208217.png)
+![](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/14992371208217.png)
 
-- 选择自动生成 schmema
+b. 选择自动生成 schmema
 
-![](media/14991660044865/14992371521034.png)
+![](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/14992371521034.png)
 
-- 编译 clang，myplugin 和 libclang
+c. 编译 clang，myplugin 和 libclang
 
-![Screen Shot 2017-07-05 at 2.51.14 P](media/14991660044865/Screen%20Shot%202017-07-05%20at%202.51.14%20PM.png)
+![Screen Shot 2017-07-05 at 2.51.14 P](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/Screen%20Shot%202017-07-05%20at%202.51.14%20PM.png)
 
-- 最终效果
-![Screen Shot 2017-07-05 at 2.52.00 P](media/14991660044865/Screen%20Shot%202017-07-05%20at%202.52.00%20PM.png)
+d. 最终效果
+![Screen Shot 2017-07-05 at 2.52.00 P](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/Screen%20Shot%202017-07-05%20at%202.52.00%20PM.png)
 
 
 ## 2、使用插件
@@ -83,13 +85,13 @@ sudo mv HackedClang.xcplugin `xcode-select -print-path`/../PlugIns/Xcode3Core.id
 sudo mv HackedBuildSystem.xcspec `xcode-select -print-path`/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Specifications
 ```
 如果自定义 clang 路径和展示的名称，则修改以下文件
-![customClang](media/14991660044865/customClang.png)
+![customClang](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/customClang.png)
 
-- Xcode 配置
-![8B76F915-D675-4411-876E-C858A446E5](media/14991660044865/8B76F915-D675-4411-876E-C858A446E5C7.png)
+a. Xcode 配置
+![8B76F915-D675-4411-876E-C858A446E5](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/8B76F915-D675-4411-876E-C858A446E5C7.png)
 
-- 添加 other_flags
-![6274A045-31D0-4514-AFDA-3F1D20AF16](media/14991660044865/6274A045-31D0-4514-AFDA-3F1D20AF16C3.png)
+b. 添加 other_flags
+![6274A045-31D0-4514-AFDA-3F1D20AF16](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/6274A045-31D0-4514-AFDA-3F1D20AF16C3.png)
 
 
 ```
@@ -102,11 +104,11 @@ sudo mv HackedBuildSystem.xcspec `xcode-select -print-path`/Platforms/iPhoneSimu
 
 ##### 2.2、命令行调用 clang 插件
 直接替换红框的 clang 为自己编译的 clang 即可
-![0BE5799F-4440-4E5E-8CD5-186935D312D1](media/14991660044865/0BE5799F-4440-4E5E-8CD5-186935D312D1.png)
+![0BE5799F-4440-4E5E-8CD5-186935D312D1](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/0BE5799F-4440-4E5E-8CD5-186935D312D1.png)
 
 #### 2.2 常用 API 介绍
 
-- 注册插件
+a. 注册插件
 
 `static clang::FrontendPluginRegistry::Add<my::MyASTAction> 
 X("MyPluginName", "MyPlugin description"); `
@@ -114,7 +116,7 @@ X("MyPluginName", "MyPlugin description"); `
 第一个参数是插件名称,第二个是插件描述
 
 
-- 传递参数到插件
+b. 传递参数到插件
 
 ``` 
 bool MyASTAction::ParseArgs(const CompilerInstance &CI, const std::vector<std::string>& args) {
@@ -151,10 +153,10 @@ setter方法名称:propertyDecl->getSetterName().getAsString()
 
 ```
 
-- 是否是成员变量 ：`if (isa<ObjCIvarDecl>(decl)) {}`
+b. 是否是成员变量 ：`if (isa<ObjCIvarDecl>(decl)) {}`
 成员变量名称:`ivarDecl->getNameAsString()`
 
-- 是否是参数 : `if (isa<ObjCTypeParamDecl>(decl)){}`
+c. 是否是参数 : `if (isa<ObjCTypeParamDecl>(decl)){}`
 
 ```
 @interface NSDictionary<Key : id<NSCopying>, Value>@end
@@ -173,7 +175,7 @@ for(ArrayRef<ParmVarDecl *>::iterator it = methodDecl->param_begin();it!=methodD
 }
 ```
 
-- 是否是变量方法枚举等 `if(isa<DeclRefExpr>(s)){}`
+d. 是否是变量方法枚举等 `if(isa<DeclRefExpr>(s)){}`
 
 ```
 声明的名称:callExpr->getDecl()->->getNameAsString()
@@ -183,7 +185,7 @@ for(ArrayRef<ParmVarDecl *>::iterator it = methodDecl->param_begin();it!=methodD
 
 ```
 
-- 向object-c对象发送消息  `isa<ObjCMessageExpr>(s)` 
+e. 向object-c对象发送消息  `isa<ObjCMessageExpr>(s)` 
 
 ```
 调用者:objcExpr->getSelector().getAsString() 
@@ -225,13 +227,15 @@ xcodebuild -workspace OneTravel.xcworkspace -scheme OneTravel  CODE_SIGN_IDENTIT
 # 4、libtool 工具开发
 
 #### 4.1 添加代码和 CMake文件
-![6AF4FDD6-BD6C-4CDF-89FB-C4368594A95A](media/14991660044865/6AF4FDD6-BD6C-4CDF-89FB-C4368594A95A.png)
 
-![E88D7FA1-A055-4AE1-A218-14100B54ABD1](media/14991660044865/E88D7FA1-A055-4AE1-A218-14100B54ABD1.png)
+![6AF4FDD6-BD6C-4CDF-89FB-C4368594A95A](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/6AF4FDD6-BD6C-4CDF-89FB-C4368594A95A.png)
+
+![E88D7FA1-A055-4AE1-A218-14100B54ABD1](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/E88D7FA1-A055-4AE1-A218-14100B54ABD1.png)
 
 进入 llvm_build 文件夹清空原来的文件，重新编译代码 `cmake -G Xcode ../llvm -DCMAKE_BUILD_TYPE:STRING=MinSizeRel`
 
 #### 4.2 一些模块的简介
+
 一些clang组件的作用：
 libclangLex：预处理、词法分析、宏处理、词元（token）、语法构造；
 libclangAST：该库是用来建立、管理、遍历AST
