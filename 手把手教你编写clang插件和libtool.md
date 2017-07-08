@@ -23,7 +23,7 @@ https://github.com/llvm-mirror/llvm
 
 #### 1.2、添加插件代码
 
-a.创建插件所在文件夹
+a.创建插件所在文件夹(示例代码见 demo)
 
 ![](https://github.com/LiuShulong/SLClangTutorial/blob/master/images/14992372911576.png)
 
